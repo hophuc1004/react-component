@@ -1,0 +1,56 @@
+.rdp-day_selected:focus-visible,
+.rdp-day_selected:hover {
+  @apply bg-primary-500 text-white !important;
+}
+
+.rdp-button_reset.rdp-button.rdp-day.rdp-day_selected {
+  @apply bg-primary-100 text-primary-800 !important;
+}
+
+.rdp-button_reset.rdp-button.rdp-day.rdp-day_selected:hover {
+  @apply bg-primary-200 text-primary-800 !important;
+}
+
+/* .rdp-day_selected {
+  @apply text-primary-500 bg-white !important;
+} */
+
+.rdp-button_reset.rdp-button.rdp-day.rdp-day_today.rdp-day_today {
+  @apply bg-primary-500 text-white !important;
+}
+
+.rdp-button_reset.rdp-button.rdp-day.rdp-day_today.rdp-day_today:hover {
+  @apply bg-primary-700 text-white !important;
+}
+
+.rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  @apply bg-gray-200 !important;
+  /* overflow: auto !important; */
+}
+
+.rdp-button_reset.rdp-button.rdp-day:hover:not([disabled]) .react-tooltip {
+  opacity: 0 !important;
+}
+
+.rdp-cell .rdp-button_reset.rdp-button.rdp-day.rdp-day_disabled:hover {
+  @apply overflow-visible !important;
+  cursor: not-allowed !important;
+}
+
+.rdp-cell .rdp-button_reset.rdp-button.rdp-day.rdp-day_disabled p:hover {
+  cursor: not-allowed !important;
+}
+
+
+.rdp-cell .rdp-button_reset.rdp-button.rdp-day.rdp-day_disabled:hover {
+  opacity: 1 !important;
+}
+
+.rdp-cell .rdp-button_reset.rdp-button.rdp-day.rdp-day_disabled:hover p {
+  opacity: 1 !important;
+  opacity: 0.25 !important;
+}
+
+.rdp-cell {
+  padding: 4px;
+}

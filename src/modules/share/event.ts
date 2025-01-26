@@ -1,0 +1,5 @@
+export const COMPETENCY_DETAIL_RE_FETCH = 're-fetch'
+export const LIST_ONBOARDING_RE_FETCH = 'onboarding-re-fetch'
+export const DETAIL_TASK_ONBOARD_RE_FETCH = 'detail-task-onboard-re-fetch'
+export const CHECK_LIST_DETAIL_ONBOARDING_RE_FETCH = 'checklist_onboarding_detail'
+export const UPDATE_FIELD_TASK_DETAIL = 'update_field_onboarding_task_detail'

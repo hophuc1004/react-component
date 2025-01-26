@@ -1,0 +1,33 @@
+image: node:18
+
+# Workflow Configuration
+
+pipelines:
+  branches:
+    develop:
+      - step:
+          name: Build and Test
+          caches:
+            - node
+          script:
+            - npm install
+            # CI=true in default variables for Bitbucket Pipelines https://support.atlassian.com/bitbucket-cloud/docs/variables-in-pipelines/
+            - npm run build
+          artifacts:
+            - dist/**
+       
+      - step:
+          name: Deploy to Staging
+          deployment: Staging
+          
+          script:
+            - echo "Deploying to server..."
+            - pipe: atlassian/scp-deploy:1.5.0
+              variables:
+                USER: ${SSH_USER}
+                SERVER: ${SSH_SERVER}
+                SSH_KEY: ${SSH_S_KEY}
+                REMOTE_PATH: "/var/www/hrm-fe/"
+                LOCAL_PATH: "dist/*"
+                EXTRA_ARGS: ['-o', 'StrictHostKeyChecking=no']
+

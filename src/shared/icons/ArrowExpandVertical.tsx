@@ -1,0 +1,26 @@
+import { IconProps } from './props'
+
+export const ArrowExpandVertical = ({ width = 7, height = 12, className }: IconProps) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      className={className}
+      viewBox='0 0 24 24'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <mask id='mask0_3207_4982' maskUnits='userSpaceOnUse' x='0' y='0' width='24' height='24'>
+        <rect width='24' height='24' fill='#D9D9D9' />
+      </mask>
+      <g mask='url(#mask0_3207_4982)'>
+        <path
+          d='M6.70005 14.6749C6.51672 14.4916 6.42505 14.2582 6.42505 13.9749C6.42505 13.6916 6.51672 13.4582 6.70005 13.2749L11.3 8.6749C11.4 8.5749 11.5084 8.5039 11.625 8.4619C11.7417 8.42057 11.8667 8.3999 12 8.3999C12.1334 8.3999 12.2584 8.42057 12.375 8.4619C12.4917 8.5039 12.6 8.5749 12.7 8.6749L17.325 13.2999C17.5084 13.4832 17.6 13.7082 17.6 13.9749C17.6 14.2416 17.5 14.4749 17.3 14.6749C17.1167 14.8582 16.8834 14.9499 16.6 14.9499C16.3167 14.9499 16.0834 14.8582 15.9 14.6749L12 10.7749L8.07505 14.6999C7.89172 14.8832 7.66672 14.9749 7.40005 14.9749C7.13338 14.9749 6.90005 14.8749 6.70005 14.6749Z'
+          fill='currentColor'
+        />
+      </g>
+    </svg>
+  )
+}
+
+export default ArrowExpandVertical

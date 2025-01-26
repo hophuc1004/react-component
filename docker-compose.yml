@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  hrm-fe:
+    image: hrm-fe:${IMAGE_VERSION:-latest}
+    restart: always
+    environment:
+      - VITE_API_SERVER=http://localhost:8000
+      - VITE_GOOGLE_CLIENT_ID=593332568461-02hbnsag1n69nasfq3n4n6puljat0gn4.apps.googleusercontent.com
+    expose:
+      - 80
+      - 443
+    ports:
+      - '3000:80'
+    healthcheck:
+      test: ['CMD-SHELL', 'curl --fail http://localhost:80/']
+      interval: 3s
+      timeout: 5s
+      retries: 3

@@ -1,0 +1,10 @@
+export interface Menu {
+  key: string
+  name: string
+  url: string
+  icon?: React.ReactNode
+  permissions?: number[]
+  tailIcon?: React.ReactNode
+  childrenNavigation?: any
+  onClickTailIcon?: (payload: any) => void
+}
