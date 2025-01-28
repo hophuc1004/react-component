@@ -223,65 +223,12 @@ export const TabBar: React.FC<React.PropsWithChildren<TabBarProps>> = ({
 
   return (
     <div className={classnames('border-b border-b-gray-200 flex items-center relative', className)}>
-      {!isIntersecting.firstItem && arrow && (
-        <div
-          className='h-full absolute left-2 flex items-center w-36 bg-white z-10'
-          style={{
-            background: 'linear-gradient(-90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 54.96%)'
-          }}
-          onClick={(e) => {
-            e.preventDefault()
-            e.stopPropagation()
-          }}
-        >
-          <IconButton
-            className='w-8 h-8 mr-auto'
-            onClick={() => {
-              setIsIntersecting({ firstItem: true, lastItem: false })
-              handleStartScrollClick()
-            }}
-          >
-            <ArrowLeftIcon />
-          </IconButton>
-        </div>
-      )}
-      <div
-        ref={containerRef}
-        className={classnames(
-          '-mb-px flex items-center gap-4 typography-body-md font-semibold overflow-x-auto',
-          tabClass,
-          {
-            'no-scrollbar': arrow
-          }
-        )}
-      >
-        {mount &&
-          filteredTabs.map((tab, index) => {
-            const isFirst = index === 0
-            const isLast = index === filteredTabs.length - 1
-            const ref = isFirst ? firstItemRef : isLast ? lastItemRef : null
-            return <TabItem key={tab.key} tab={tab} isActive={isActive} onClick={onClick} ref={ref} />
-          })}
-      </div>
-
-      {!isIntersecting.lastItem && arrow && (
-        <div
-          className='absolute right-2 flex items-center w-36'
-          style={{
-            background: 'linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 54.96%)'
-          }}
-        >
-          <IconButton
-            className='w-8 h-8 ml-auto'
-            onClick={() => {
-              setIsIntersecting({ firstItem: false, lastItem: true })
-              handleEndScrollClick()
-            }}
-          >
-            <ArrowRightIcon />
-          </IconButton>
-        </div>
-      )}
+      {filteredTabs.map((tab, index) => {
+        const isFirst = index === 0
+        const isLast = index === filteredTabs.length - 1
+        const ref = isFirst ? firstItemRef : isLast ? lastItemRef : null
+        return <TabItem key={tab.key} tab={tab} isActive={isActive} onClick={onClick} ref={ref} />
+      })}
     </div>
   )
 }

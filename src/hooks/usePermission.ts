@@ -15,13 +15,15 @@ const usePermission = (permissions?: number[]) => {
     const matchesClone = cloneDeep(matches)
     const lastMatch = matchesClone.pop()
 
-    const needPermission = get(lastMatch.handle, 'permissions', permissions || [])
-    if (!isEmpty(currentPermission) && needPermission?.length > 0) {
-      const isHavePermission = includePermission(currentPermission, needPermission)
-      if (!isHavePermission) {
-        navigate('/my-profile')
-      }
-    }
+    // const needPermission = get(lastMatch.handle, 'permissions', permissions || [])
+    // if (!isEmpty(currentPermission) && needPermission?.length > 0) {
+    //   const isHavePermission = includePermission(currentPermission, needPermission)
+    //   if (!isHavePermission) {
+    //     navigate('/my-profile')
+    //   }
+    // }
+
+    navigate('/my-profile')
 
     return () => {}
   }, [currentPermission, permissions, matches])

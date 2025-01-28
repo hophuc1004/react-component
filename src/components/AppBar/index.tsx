@@ -34,8 +34,7 @@ export const AppBar: React.FC<React.PropsWithChildren<AppBarProps>> = ({
         )}
         <div className='flex items-center'>
           <div className=''>{logo}</div>
-          <div className=''>{logo}</div>
-          <p className='ml-2 typography-title-md font-semibold text-white'>Minutes</p>
+          <p className='ml-2 typography-title-md font-semibold text-white'>Minute React Component</p>
         </div>
       </div>
       <div className='flex'>

@@ -7,7 +7,6 @@ import NoInternetIcon from '~/shared/icons/NoInternetIcon'
 
 const NoInternetConnection: FC<PropsWithChildren> = ({ children }) => {
   const isOnline = useOnlineStatus()
-  console.log('isOnline:', isOnline)
   const [retry, setRetry] = useState(false)
   const { t } = useTranslation()
 

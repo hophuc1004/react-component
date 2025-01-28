@@ -1,35 +1,38 @@
 /* eslint-disable no-unsafe-optional-chaining */
-import React, { useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { AppBar } from '~/components/AppBar'
 import { Navigation } from '~/components/Navigation'
 import { Menu } from '~/components/Navigation/types/menu'
-import LogoSvg from '~/assets/images/logo-v2.svg'
 import LogoMinute from '~/assets/images/LogoMinute.svg'
 
 import classnames from 'classnames'
 import PageHeader from 'components/PageHeader'
 import { AccountCircleIcon } from '~/shared/icons/AccountCircle'
-import { CalendarMonthIcon } from '~/shared/icons/CalendarMonth'
-import { PERMISSIONS, PROJECT_MANAGER_APPROVER_PERMISSIONS } from '~/shared/utils/role'
-import useCurrentUser from '~/hooks/useCurrentUser'
-import { includePermission } from '~/shared/utils/util'
-import { AppraisalIcon } from '~/shared/icons/AppraisalIcon'
 
 import isNil from 'lodash/isNil'
 import { STORAGE_KEY } from '~/shared/constants/storage-key.const'
-import isEmpty from 'lodash/isEmpty'
 import { usePageHeaderContext } from '~/contexts/PageHeaderContext'
-import usePermission from '~/hooks/usePermission'
 import { useTranslation } from 'react-i18next'
+import { Outlet, useNavigate, useParams } from 'react-router-dom'
+import NoInternetConnection from 'components/NoInternetConnection'
 
 const EmployeeLayout: React.FC = () => {
   const [isNavExpanded, setNavExpanded] = useState(false)
+  const navigate = useNavigate()
 
-  const { permissions, user } = useCurrentUser()
+  const param = useParams()
+  const tabActive = param['*']
+
   const { t } = useTranslation()
   const { handleSetPageHeaderState } = usePageHeaderContext()
 
-  usePermission()
+  useLayoutEffect(() => {
+    if (!tabActive) {
+      navigate('/my-profile')
+    }
+
+    return () => {}
+  }, [])
 
   const handleExpandedNav = (lengthMenu) => {
     if (lengthMenu > 1) {
@@ -38,63 +41,6 @@ const EmployeeLayout: React.FC = () => {
     }
     return
   }
-
-  const childrenAppraisalMenuItems: Menu[] = [
-    {
-      key: 'template',
-      name: t('employeeInfoPage.templateManagement'),
-      url: 'performance-management/template',
-      permissions: [PERMISSIONS.MANAGE_TEMPLATE_MANAGEMENT]
-    },
-    {
-      key: 'appraisal',
-      name: t('employeeInfoPage.appraisalManagement'),
-      url: 'performance-management/appraisal',
-      permissions: [PERMISSIONS.MANAGE_APPRAISAL_MANAGEMENT]
-    }
-  ]
-
-  const filterSubmenuAppraisalItems = childrenAppraisalMenuItems.filter(
-    (item) => includePermission(permissions, item?.permissions) || !item.permissions || item?.permissions.length === 0
-  )
-
-  const childrenLeaveMenuItems: Menu[] = [
-    {
-      key: 'board',
-      name: t('employeeInfoPage.leaveInformationBoard'),
-      url: 'leave-management/board',
-      permissions: [PERMISSIONS.MANAGE_LEAVE_INFO_BOARD]
-    },
-    {
-      key: 'requests',
-      name: t('employeeInfoPage.requestManagement'),
-      url: 'leave-management/requests',
-      permissions: [PERMISSIONS.MANAGE_STAFF_LEAVE_REQUESTER, ...PROJECT_MANAGER_APPROVER_PERMISSIONS]
-    }
-  ]
-
-  const filterSubmenuLeaveItems = childrenLeaveMenuItems.filter(
-    (item) => includePermission(permissions, item?.permissions) || !item.permissions || item?.permissions.length === 0
-  )
-
-  const childrenCompetencyMenuItems: Menu[] = [
-    {
-      key: 'template-competency',
-      name: t('employeeInfoPage.templateManagement'),
-      url: 'competency-management/template-competency',
-      permissions: [PERMISSIONS.MANAGE_TEMPLATE_COMPETENCY]
-    },
-    {
-      key: 'competency-management',
-      name: t('employeeInfoPage.competencyManagement'),
-      url: 'competency-management/competency',
-      permissions: [PERMISSIONS.MANAGE_ASS_COMPETENCY_MANAGEMENT]
-    }
-  ]
-
-  const filterSubmenuCompetencyItems = childrenCompetencyMenuItems.filter(
-    (item) => includePermission(permissions, item?.permissions) || !item.permissions || item?.permissions.length === 0
-  )
 
   const menuItems: Menu[] = [
     {
@@ -105,77 +51,7 @@ const EmployeeLayout: React.FC = () => {
     }
   ]
 
-  const filteredMenuItems = menuItems.filter(
-    (item) => includePermission(permissions, item?.permissions) || !item.permissions || item?.permissions.length === 0
-  )
-
-  const getFinalNavItem = (filteredMenuItems) => {
-    if (isEmpty(filteredMenuItems)) {
-      return
-    }
-
-    const finalNavItem = filteredMenuItems?.map((menu) => {
-      switch (menu?.key) {
-        case 'performance-appraisal':
-          if (filterSubmenuAppraisalItems?.length === 1) {
-            return {
-              key: filterSubmenuAppraisalItems[0]?.key,
-              name: t('employeeInfoPage.performanceAppraisals'),
-              url: filterSubmenuAppraisalItems[0]?.url,
-              icon: <AppraisalIcon width={24} height={24} />,
-              tailIcon: null,
-              permissions: [PERMISSIONS.MANAGE_PERFORMANCE_APPRAISAL, ...filterSubmenuAppraisalItems[0]?.permissions],
-              childrenNavigation: null,
-              onClickTailIcon: () => {}
-            }
-          }
-          return menu
-
-        case 'leave-management':
-          if (filterSubmenuLeaveItems?.length === 1) {
-            return {
-              key: filterSubmenuLeaveItems[0]?.key,
-              name: t('leaveManagement'),
-              url: filterSubmenuLeaveItems[0]?.url,
-              icon: <CalendarMonthIcon width={24} height={24} />,
-              tailIcon: null,
-              permissions: [
-                PERMISSIONS.MANAGE_LIST_EMPLOYEE,
-                PERMISSIONS.MANAGE_STAFF_LEAVE_REQUESTER,
-                ...filterSubmenuLeaveItems[0]?.permissions
-              ],
-              childrenNavigation: null,
-              onClickTailIcon: () => {}
-            }
-          }
-          return menu
-
-        case 'competency-management':
-          if (filterSubmenuCompetencyItems?.length === 1) {
-            return {
-              key: filterSubmenuCompetencyItems[0]?.key,
-              name: t('employeeInfoPage.competencyAssessment'),
-              url: filterSubmenuCompetencyItems[0]?.url,
-              icon: <CalendarMonthIcon width={24} height={24} />,
-              tailIcon: null,
-              permissions: [PERMISSIONS.MANAGE_COMPETENCY, ...filterSubmenuCompetencyItems[0]?.permissions],
-              childrenNavigation: null,
-              onClickTailIcon: () => {}
-            }
-          }
-          return menu
-
-        default:
-          break
-      }
-
-      return menu
-    })
-
-    return finalNavItem
-  }
-
-  const itemNavRender = getFinalNavItem(filteredMenuItems)
+  const itemNavRender = menuItems
 
   const renderLogo = () => {
     return (
@@ -242,11 +118,11 @@ const EmployeeLayout: React.FC = () => {
             <PageHeader />
           </div>
 
-          {/* <div className='flex-1 h-full'>
+          <div className='flex-1 h-full'>
             <NoInternetConnection>
               <Outlet />
             </NoInternetConnection>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
