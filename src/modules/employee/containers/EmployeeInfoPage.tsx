@@ -7,8 +7,8 @@ import { usePageHeaderContext } from '~/contexts/PageHeaderContext'
 import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 import { PreviewFile } from 'components/PreviewFile'
-import NoEmployee from '../components/NoEmployee'
 import FileExplorer from 'components/React-Component/FileExplorer'
+import Pagination from 'components/React-Component/Pagination'
 
 const EmployeeInfoPage: React.FC = () => {
   const param = useParams()
@@ -34,6 +34,11 @@ const EmployeeInfoPage: React.FC = () => {
         key: 'file-explorer',
         name: t('File Explorer'),
         component: <FileExplorer />
+      },
+      {
+        key: 'pagination',
+        name: t('Pagination'),
+        component: <Pagination />
       }
     ],
     [t]
